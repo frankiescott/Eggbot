@@ -27,56 +27,86 @@ class Teams():
                         list[j], list[j+1] = list[j+1], list[j]
         return list
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def viewpoints(self, ctx):
+        r = discord.utils.get(ctx.message.guild.roles, name="Ravenclaw")
+        h = discord.utils.get(ctx.message.guild.roles, name="Hufflepuff")
+        s = discord.utils.get(ctx.message.guild.roles, name="Slytherin")
+        g = discord.utils.get(ctx.message.guild.roles, name="Gryffindor")
+        members = {"Ravenclaw": r, "Hufflepuff": h, "Slytherin": s, "Gryffindor": g}
         list = self.getdata()
         n = len(list)
         embed = discord.Embed(title="Team Leaderboard", colour=0xffcc4d)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/372188609425702915/510934259121520661/1f3c6.png")
         emojis = ["🥇", "🥈", "🥉", ":four:"]
         for i in range(n):
-            embed.add_field(name=emojis[i] + " __" + list[i][0] + "__", value="Leader: " + ctx.message.server.get_member(list[i][1]).mention + "\nScore: **" + str(list[i][2]) + "**", inline=True)
-        await self.bot.send_message(ctx.message.channel, embed=embed)
+            embed.add_field(name=emojis[i] + " __" + list[i][0] + "__", value="Leader: " + ctx.message.guild.get_member(list[i][1]).mention + "\nScore: **" + str(list[i][2]) + "**\nMembers: " + str(len(members[list[i][0]].members)), inline=True)
+        await ctx.send(embed=embed)
 
-    @commands.command(pass_context=True)
-    async def setleader(self, ctx, team: str, id: str):
-        if ctx.message.author.id != "183457916114698241":
+    @commands.command()
+    async def viewmembers(self, ctx, team: str):
+        if team not in ["Ravenclaw", "Hufflepuff", "Slytherin", "Gryffindor"]:
+            await ctx.send(":no_entry_sign: Invalid team specified.")
             return
-        if ctx.message.server.get_member(id) is None:
-            await self.bot.send_message(ctx.message.channel, ":no_entry_sign: User not found!")
+
+        team_data = {
+            "Gryffindor": ["https://cdn.discordapp.com/attachments/372188609425702915/511727611227930624/main-qimg-44ac99d5412f2f8904b023a83a6a4929.png", 0xd1222d],
+            "Ravenclaw": ["https://cdn.discordapp.com/attachments/372188609425702915/511727591976075264/main-qimg-7ce3c359881af177a2f719b972c59a66.png", 0x05a8cc],
+            "Hufflepuff": ["https://cdn.discordapp.com/attachments/372188609425702915/511727558895861760/main-qimg-6cde2f92a034c500874c57234a1a4d01.png", 0xf7dd20],
+            "Slytherin": ["https://cdn.discordapp.com/attachments/372188609425702915/511727537513168924/main-qimg-2f3a2cd2364bcc038264f8f9ee6a5c60.png", 0x2ca84f]
+        }
+        member_list = []
+        role = discord.utils.get(ctx.message.guild.roles, name=team)
+        for member in role.members:
+            member_list.append(member.name)
+        embed = discord.Embed(description='\n'.join(member_list) + "\n\nTotal: **" + str(len(role.members)) + "**", colour=team_data[team][1])
+        embed.set_author(name=team)
+        embed.set_thumbnail(url=team_data[team][0])
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def setleader(self, ctx, team: str, id: int):
+        if ctx.message.author.id != 183457916114698241:
+            return
+        if ctx.message.guild.get_member(id) is None:
+            await ctx.send(":no_entry_sign: User not found!")
             return
         else:
             #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'r') as fp:
             with open('teamdata.json', 'r') as fp:
                 contents = json.load(fp)
                 if team not in contents:
-                    await self.bot.send_message(ctx.message.channel, ":no_entry_sign: Invalid team name!")
+                    await ctx.send(":no_entry_sign: Invalid team name!")
                     return
                 else:
                     contents[team][0] = id
-                    await self.bot.send_message(ctx.message.channel, ":white_check_mark: " + ctx.message.server.get_member(id).mention + " is now the team leader for " + team + "!")
+                    await ctx.send(":white_check_mark: " + ctx.message.guild.get_member(id).mention + " is now the team leader for " + team + "!")
             #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'w') as fp:
             with open('teamdata.json', 'w') as fp:
                 json.dump(contents, fp)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def award(self, ctx, points: int, *, team: str):
+        mod_role = discord.utils.get(ctx.message.guild.roles, name="Mod")
+        if mod_role not in ctx.message.author.roles:
+            await ctx.send(":no_entry_sign: You do not have permission to use this command.")
+            return
         #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'r') as fp:
         with open('teamdata.json', 'r') as fp:
             contents = json.load(fp)
             if team not in contents:
-                await self.bot.send_message(ctx.message.channel, ":no_entry_sign: Team not found!")
+                await ctx.send(":no_entry_sign: Team not found!")
                 return
             else:
                 contents[team][1] += points
-                await self.bot.send_message(ctx.message.channel, ":white_check_mark: " + team + " has been awarded " + str(points) + " points!")
+                await ctx.send(":white_check_mark: " + team + " has been awarded " + str(points) + " points!")
         #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'w') as fp:
         with open('teamdata.json', 'w') as fp:
             json.dump(contents, fp)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def resetpoints(self, ctx):
-        if str(ctx.message.author.id) != "183457916114698241":
+        if ctx.message.author.id != 183457916114698241:
             return
 
         #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'r') as fp:
@@ -84,14 +114,14 @@ class Teams():
             contents = json.load(fp)
             for c in contents:
                 contents[c][1] = 0
-            await self.bot.send_message(ctx.message.channel, ":white_check_mark: Team points have been reset!")
+            await ctx.send(":white_check_mark: Team points have been reset!")
         #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'w') as fp:
         with open('teamdata.json', 'w') as fp:
             json.dump(contents, fp)
 
-    @commands.command(pass_context=True)
-    async def teaminfo(self, ctx):
-        if str(ctx.message.author.id) != "183457916114698241":
+    @commands.command()
+    async def houseinfo(self, ctx):
+        if ctx.message.author.id != 183457916114698241:
             return
         content = [
 
@@ -119,7 +149,7 @@ React with 💚 to join Slytherin.""", "The choice is yours!", "https://cdn.disc
             embed = discord.Embed(description=content[x][0], colour=content[x][3])
             embed.set_author(name=content[x][1])
             embed.set_thumbnail(url=content[x][2])
-            await self.bot.send_message(ctx.message.channel, embed=embed)
+            await ctx.send(embed=embed)
 
 def setup(bot):
   bot.add_cog(Teams(bot))

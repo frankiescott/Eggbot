@@ -6,9 +6,9 @@ class Infodisplay():
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def tools(self, ctx):
-        if str(ctx.message.author.id) == "183457916114698241":
+        if ctx.message.author.id == 183457916114698241:
             content = [
 ["""`?warn mention/userid`
 Warns a user.
@@ -77,12 +77,12 @@ Explains what the generation roles mean.""", "Frequently Asked Questions", "http
                 embed = discord.Embed(description=content[x][0], colour=content[x][3])
                 embed.set_author(name=content[x][1])
                 embed.set_thumbnail(url=content[x][2])
-                await self.bot.send_message(ctx.message.channel, embed=embed)
+                await ctx.send(embed=embed)
 
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def games(self, ctx):
-        if str(ctx.message.author.id) == "183457916114698241":
+        if ctx.message.author.id == 183457916114698241:
             content = [
 
 ["""Let out your frustration with an 'oof'
@@ -128,19 +128,19 @@ Examples of **unacceptable** questions:
                 embed = discord.Embed(description=content[x][0], colour=content[x][3])
                 embed.set_author(name=content[x][1])
                 embed.set_thumbnail(url=content[x][2])
-                await self.bot.send_message(ctx.message.channel, embed=embed)
+                await ctx.send(embed=embed)
 
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def info(self, ctx):
-        if str(ctx.message.author.id) == "183457916114698241":
-            selfies = self.bot.get_channel("465697566571364352")
-            roles = self.bot.get_channel("487029031888486424")
-            suggestions = self.bot.get_channel("473964680004763659")
+        if ctx.message.author.id == 183457916114698241:
+            selfies = self.bot.get_channel(465697566571364352)
+            roles = self.bot.get_channel(487029031888486424)
+            suggestions = self.bot.get_channel(473964680004763659)
             content = [
 ["""We are a community server to hang out, chat, and make friends. Don't be shy! We love meeting and talking to new people. Please take a moment to read the rules and general information about the server below.
 
-If you have any questions, feel free to ask in """ + self.bot.get_channel("473964680004763659").mention + """!
+If you have any questions, feel free to ask in """ + self.bot.get_channel(473964680004763659).mention + """!
 
 Permanent invite link: `http://discord.gg/VnAjMgy`""", "Welcome to Lonely Nerds!", "https://cdn.discordapp.com/attachments/372188609425702915/498973052445523983/lonelynerds.png", 0xFFC961],
 
@@ -174,7 +174,7 @@ Roles are rewarded based on level.
  35:     Family
  40:     Loyal Family```
 
-To view ranking information, use the """ + self.bot.get_channel("455400008246624257").mention + """ channel to issue any of the following commands.
+To view ranking information, use the """ + self.bot.get_channel(455400008246624257).mention + """ channel to issue any of the following commands.
 
 `!rank`
 View your ranking card.
@@ -201,7 +201,7 @@ Awarded to those who make a suggestion in """ + suggestions.mention + """ that g
 `Champion`
 Awarded to those who win server events or contests.""", "Roles", "https://cdn.discordapp.com/attachments/372188609425702915/498980224197722123/shield.png", 0x55ACEE],
 
-["""To use the color role system, use the """ + self.bot.get_channel("455400008246624257").mention + """ channel to issue any of the following commands.
+["""To use the color role system, use the """ + self.bot.get_channel(455400008246624257).mention + """ channel to issue any of the following commands.
 
 `e!colors`
 View the availible colors.
@@ -217,106 +217,99 @@ Remove your current color role.""", "Color Roles", "https://cdn.discordapp.com/a
 We host weekly photography and drawing contests.
 Head over to """ + roles.mention + """ and grab the `Artist` role if you are interested in participating in art contests, and grab the `Photographer` role if you are interested in participating in photography contests.
 
-Check """ + self.bot.get_channel("508819194792378369").mention + """ for the latest art contest and """ + self.bot.get_channel("487634576253124609").mention + """ for the latest photography contest.
+Check """ + self.bot.get_channel(508819194792378369).mention + """ for the latest art contest and """ + self.bot.get_channel(487634576253124609).mention + """ for the latest photography contest.
 
 We also host other unique contests you should look out for!""", "Contests", "https://cdn.discordapp.com/attachments/372188609425702915/510934259121520661/1f3c6.png", 0xffcc4d],
 
-["""Now that you are all caught up on what you need to know, feel free to introduce yourself in """ + self.bot.get_channel("473551440514646026").mention + """ and then stop by """ + self.bot.get_channel("455399951258746902").mention + """ to say hi!""", "Thanks for reading!", "https://cdn.discordapp.com/attachments/372188609425702915/498988413966352384/wave.png", 0xFFDC5D] ]
+["""Now that you are all caught up on what you need to know, stop by """ + self.bot.get_channel(455399951258746902).mention + """ to say hi!""", "Thanks for reading!", "https://cdn.discordapp.com/attachments/372188609425702915/498988413966352384/wave.png", 0xFFDC5D] ]
             for x in range(0, len(content)):
                 embed = discord.Embed(description=content[x][0], colour=content[x][3])
                 embed.set_author(name=content[x][1])
                 embed.set_thumbnail(url=content[x][2])
-                await self.bot.send_message(ctx.message.channel, embed=embed)
+                await ctx.send(embed=embed)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def photocontest(self, ctx, theme: str, deadline: str, *, description: str):
-        if str(ctx.message.author.id) == "183457916114698241" or str(ctx.message.author.id) == "324678737377492993":
+        if ctx.message.author.id == 183457916114698241 or ctx.message.author.id == 324678737377492993:
             msg = """**Theme: ** """ + theme + """
  **Deadline: **""" + deadline + """
 
  """ + description + """
 
  **Rules: **
-You must have the `Photographer` role to participate. You can obtain the role by visiting """ + self.bot.get_channel("487029031888486424").mention + """.
-All photos must be submitted to """ + self.bot.get_channel("487634576253124609").mention + """ by the specified deadline.
--Original content only.
--Must follow the specified theme.
--A maximum of two photos may be submitted.
--Old photos may be used.
+- You must have the `Photographer` role to participate. Visit """ + self.bot.get_channel(487029031888486424).mention + """ to apply the role.
+- All photos must be submitted to """ + self.bot.get_channel(487634576253124609).mention + """ by the specified deadline.
+- Submissions must be original content and follow the specified theme.
+- A maximum of two photos may be submitted.
+- Do **not** vote for your own photos during the voting period.
 
 **How does it work?**
-Once the submission period ends, """ + self.bot.get_channel("487634576253124609").mention + """ will have post emoji reactions enabled.
-Each user may vote on up to 3 photographs by adding an emoji reaction to respective submissions. Please only cast one vote per picture. Multiple emoji reactions on the same post will not be counted. If you are caught abusing the contest, you will lose permissions to access the channel and be forbidden from participating in the future.
+Once the submission period ends, """ + self.bot.get_channel(487634576253124609).mention + """ will have emoji reactions enabled.
+Each user may vote on up to 3 photographs by adding an emoji reaction to respective submissions. Users are limited to one vote per picture. Multiple emoji reactions on a post by a single user will not be counted.
 
-The winner will be given a special role, bragging rights, have their picture pinned, and choose the theme for the next contest.
+The winner will receive a special role, bragging rights, have their picture pinned, and choose the theme for the next contest.
 
 Good luck!"""
             embed = discord.Embed(title="Photo Contest", description=msg, colour=0x3C88C2)
             embed.set_author(icon_url=ctx.message.author.avatar_url, name=ctx.message.author.display_name + " has an announcement!")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/372188609425702915/500029451250302976/1f4f7.png")
-            await self.bot.send_message(ctx.message.channel, embed=embed)
-            await self.bot.delete_message(ctx.message)
+            await ctx.send(embed=embed)
+            await ctx.message.delete(ctx.message)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def drawingcontest(self, ctx, theme: str, deadline: str, *, description: str):
-        if str(ctx.message.author.id) == "183457916114698241" or str(ctx.message.author.id) == "324678737377492993":
+        if ctx.message.author.id == 183457916114698241 or ctx.message.author.id == 324678737377492993:
             msg = """**Theme: ** """ + theme + """
  **Deadline: **""" + deadline + """
 
  """ + description + """
 
  **Rules: **
-You must have the `Artist` role to participate. You can obtain the role by visiting """ + self.bot.get_channel("487029031888486424").mention + """.
-All photos must be submitted to """ + self.bot.get_channel("508819194792378369").mention + """ by the specified deadline.
--Original content only.
--Must follow the specified theme.
--A maximum of two drawings may be submitted.
--Old drawings may be used.
+You must have the `Artist` role to participate. Visit """ + self.bot.get_channel(487029031888486424).mention + """ to apply the role.
+All drawings must be submitted to """ + self.bot.get_channel(508819194792378369).mention + """ by the specified deadline.
+- Submissions must be original content and follow the specified theme.
+- A maximum of two drawings may be submitted.
+- Do **not** vote for your own photos during the voting period.
 
 **How does it work?**
-Once the submission period ends, """ + self.bot.get_channel("508819194792378369").mention + """ will have post emoji reactions enabled.
-Each user may vote on up to 3 drawings by adding an emoji reaction to respective submissions. Please only cast one vote per picture. Multiple emoji reactions on the same post will not be counted. If you are caught abusing the contest, you will lose permissions to access the channel and be forbidden from participating in the future.
+Once the submission period ends, """ + self.bot.get_channel(508819194792378369).mention + """ will have emoji reactions enabled.
+Each user may vote on up to 3 drawings by adding an emoji reaction to respective submissions. Users are limited to one vote per picture. Multiple emoji reactions on a post by the same user will not be counted.
 
-The winner will be given a special role, bragging rights, have their drawing pinned, and choose the theme for the next contest.
+The winner will receive a special role, bragging rights, have their drawing pinned, and choose the theme for the next contest.
 
 Good luck!"""
-            embed = discord.Embed(title="Photo Contest", description=msg, colour=0x3C88C2)
+            embed = discord.Embed(title="Art Contest", description=msg, colour=0x3C88C2)
             embed.set_author(icon_url=ctx.message.author.avatar_url, name=ctx.message.author.display_name + " has an announcement!")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/372188609425702915/510862808255037451/1f58c.png")
-            await self.bot.send_message(ctx.message.channel, embed=embed)
-            await self.bot.delete_message(ctx.message)
+            await ctx.send(embed=embed)
+            await ctx.message.delete()
 
-    @commands.command(pass_context=True)
-    async def photowinner(self, ctx, member: discord.Member=None, photourl: str=None):
-        if str(ctx.message.author.id) == "183457916114698241" or str(ctx.message.author.id) == "324678737377492993":
-            if member is None:
-                await self.bot.send_message(ctx.message.channel, ":no_entry_sign: Please tag the winner!")
-                return
-            elif photourl is None:
-                await self.bot.send_message(ctx.message.channel, ":no_entry_sign: Please supply the winning photo's URL!")
-                return
-            else:
-                msg = "Congratulations to " + member.mention + " for winning this week's photo contest!"
-                embed = discord.Embed(title="Photo Contest Winner", description=msg, colour=0x3C88C2)
-                embed.set_author(icon_url=ctx.message.author.avatar_url, name=ctx.message.author.display_name + " has an announcement!")
-                embed.set_thumbnail(url=photourl)
-                await self.bot.send_message(ctx.message.channel, embed=embed)
-                await self.bot.delete_message(ctx.message)
-
-    @commands.command(pass_context=True)
+    @commands.command()
     async def confess(self, ctx):
-        if str(ctx.message.author.id) == "183457916114698241" or str(ctx.message.author.id) == "324678737377492993":
+        if ctx.message.author.id == 183457916114698241 or ctx.message.author.id == 324678737377492993:
             msg = """Is there anything you would like to get off your chest with the comfort of anonymity?
 
-Feel free to submit a confession to the Google form provided below. Your submission is anonymous and the confession will be displayed in """ + self.bot.get_channel("508109297385734144").mention + """.
+Feel free to submit a confession to the Google form provided below. Your submission is anonymous and the confession will be displayed in """ + self.bot.get_channel(508109297385734144).mention + """.
 
 Confessions must be **safe for work** and do ***not*** submit insulting remarks regarding another member on the server.
 
 https://goo.gl/forms/CmugvdeHEU9rpuE52"""
             embed = discord.Embed(title="Confessions", description=msg, colour=0x000000)
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/372188609425702915/511346995600818187/speaking-ICON.png")
-            await self.bot.send_message(ctx.message.channel, embed=embed)
-            await self.bot.delete_message(ctx.message)
+            await ctx.send(embed=embed)
+            await ctx.message.delete()
+
+    @commands.command()
+    async def helper(self, ctx):
+        if ctx.message.author.id == 183457916114698241 or ctx.message.author.id == 324678737377492993:
+            helper_role = discord.utils.get(ctx.message.guild.roles, name="Helper")
+            msg = """We have a group of volunteers who chose to opt-in for the """ + helper_role.mention + """ role. Feel free to mention """ + helper_role.mention + """ if you are in need of someone to speak to.
+
+Please do not mention the role as soon as you post. Give people some time to read and respond first."""
+            embed = discord.Embed(title="Helpers", description=msg, colour=0x292f33)
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/372188609425702915/527640560421306388/10582-busts-in-silhouette.png")
+            await ctx.send(embed=embed)
+            await ctx.message.delete()
 
 def setup(bot):
   bot.add_cog(Infodisplay(bot))

@@ -17,10 +17,10 @@ class Leaderboard():
                 longest = len(player['username'])
         return longest + 2
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def top(self, ctx, param: int=0):
         if param < 0:
-            await self.bot.send_message(ctx.message.channel, ":no_entry_sign: That page does not exist!")
+            await ctx.send(":no_entry_sign: That page does not exist!")
             return
         apipage = "0"
         if param != 0:
@@ -30,7 +30,7 @@ class Leaderboard():
         page = session_requests.get(url)
         data = page.json()
         if len(data['players']) == 0:
-            await self.bot.send_message(ctx.message.channel, ":no_entry_sign: That page does not exist!")
+            await ctx.send(":no_entry_sign: That page does not exist!")
             return
         longest_name = self.find_longest_name(data['players'])
         message = "Server Leaderboard: Page {}\n\n{:<6}{:<{namelength}}{:<7}{:<6}\n".format(int(apipage) + 1, "Rank", "Name", "Level", "XP", namelength=longest_name) + ("-" * (19 + longest_name)) + "\n"
@@ -40,7 +40,7 @@ class Leaderboard():
             count += 1
         nextpage = int(apipage) + 2
         message = message + "\nType e!top {} to see the next page.".format(nextpage)
-        await self.bot.send_message(ctx.message.channel, "```python\n"+message+"```")
+        await ctx.send("```python\n"+message+"```")
 
 def setup(bot):
   bot.add_cog(Leaderboard(bot))
