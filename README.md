@@ -3,7 +3,8 @@
 Eggbot is a custom Discord bot featuring,
 - Color role system
 - Auto-moderation
-- Leaderboard 
+- Leaderboard tracking
 - Information embeds
 - Moderator commands
 - Team system
+- Contest voting verification
