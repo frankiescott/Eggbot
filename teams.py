@@ -105,6 +105,25 @@ class Teams():
             json.dump(contents, fp)
 
     @commands.command()
+    async def remove(self, ctx, points: int, *, team: str):
+        mod_role = discord.utils.get(ctx.message.guild.roles, name="Mod")
+        if mod_role not in ctx.message.author.roles:
+            await ctx.send(":no_entry_sign: You do not have permission to use this command.")
+            return
+        #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'r') as fp:
+        with open('teamdata.json', 'r') as fp:
+            contents = json.load(fp)
+            if team not in contents:
+                await ctx.send(":no_entry_sign: Team not found!")
+                return
+            else:
+                contents[team][1] -= points
+                await ctx.send(":white_check_mark: Subtracted " + str(points) + " points from " + team + "!")
+        #with open('C:\\Users\\hxcfr\\Desktop\\discord bot\\teamdata.json', 'w') as fp:
+        with open('teamdata.json', 'w') as fp:
+            json.dump(contents, fp)
+
+    @commands.command()
     async def resetpoints(self, ctx):
         if ctx.message.author.id != 183457916114698241:
             return

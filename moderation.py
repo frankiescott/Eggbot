@@ -41,6 +41,9 @@ class Moderation():
         elif member is None:
             await ctx.send(":no_entry_sign: Please tag the user you want to mute.")
             return
+        elif ctx.message.author == member:
+            await ctx.send(":no_entry_sign: You cannot mute yourself.")
+            return
         else:
             for r in member.roles:
                 if r.id == self.muted:

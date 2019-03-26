@@ -4,10 +4,11 @@ import platform
 import requests
 import time
 import datetime
+import random
 from keys import API_KEY
 from discord.ext.commands import Bot
 from discord.ext import commands
-
+import io
 async def run():
     bot = Bot()
     try:
@@ -25,7 +26,6 @@ class Bot(commands.Bot):
         self.add_command(self.poll)
         self.add_command(self.yao)
         self.add_command(self.gaming)
-
         self.gaming_timer = 0
 
     async def countdown(self, message):
@@ -107,6 +107,21 @@ class Bot(commands.Bot):
         '''GAMING PING TIMER'''
         if "<@&465699200362086410>" in message.content:
             await self.countdown(message)
+
+        '''CONFESSIONS'''
+        if message.channel.id == 508109297385734144:
+            if message.author.bot == True:
+                return
+            if message.content.startswith("~"):
+                return
+            else:
+                confessions = self.get_channel(id=508109297385734144)
+                color = random.randint(000000, 16777215)
+                embed = discord.Embed(description="A user wrote,\n\n*" + message.content + "*\n ", colour=int(color), title="Submit your own to https://goo.gl/forms/CmugvdeHEU9rpuE52")
+                embed.set_author(icon_url="https://cdn.discordapp.com/attachments/372188609425702915/530714183323615243/1f4e5.png", name="Confession Box")
+                embed.set_footer(icon_url=message.author.avatar_url, text="Confession published by " + message.author.display_name + ". All confessions are anonymous.")
+                await confessions.send(embed=embed)
+                await message.delete()
 
         '''GAME MODERATION'''
         if message.channel.id == 475730288648126494:
@@ -195,8 +210,10 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def status(self, ctx,  *, stat: str):
-        if str(ctx.message.author.id) == 183457916114698241:
-            await self.change_presence(game=discord.Game(name=(stat)))
+        if ctx.message.author.id == 183457916114698241:
+            game = discord.Game(stat)
+            await self.change_presence(activity=game)
+            await ctx.send(":white_check_mark: Status set to '" + stat + "'")
 
     async def on_ready(self):
         print('Logged in as '+self.user.name+' (ID:'+str(self.user.id)+') | Connected to '+str(len(self.guilds))+' servers | Connected to '+str(len(set(self.get_all_members())))+' users')
@@ -206,8 +223,11 @@ class Bot(commands.Bot):
         print('Use this link to invite {}:'.format(self.user.name))
         print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(str(self.user.id)))
         print('--------')
-
-        cogs = ['verification', 'colors', 'faq', 'leaderboard', 'infodisplay', 'teams', 'moderation']
+        #with io.open("demofile.txt", 'w', encoding='utf8') as file:
+            #for member in self.get_all_members():
+                #n = member.name
+                #file.write(n + "\n")
+        cogs = ['verification', 'colors', 'faq', 'leaderboard', 'infodisplay', 'teams', 'moderation', 'votecount']
         for cog in cogs:
             self.load_extension(cog)
 
