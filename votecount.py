@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class Votecount():
+class Votecount(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -51,20 +51,6 @@ class Votecount():
                     message = message + url + "\n"
                 await ctx.message.channel.send(message)
         await ctx.message.channel.send(":white_check_mark: Voting integrity check completed.")
-
-    @commands.command()
-    async def pollcount(self, ctx, posts: int):
-        globalvotecount = {}
-        async for m in ctx.message.channel.history(limit=posts + 1):
-            for reaction in m.reactions:
-                users = await reaction.users().flatten()
-                for u in users:
-                    strid = str(u.name)
-                    if strid not in globalvotecount:
-                        globalvotecount[strid] = 1
-                    else:
-                        globalvotecount[strid] += 1
-        await self.bot.get_channel(546879381025456128).send(globalvotecount)
 
 def setup(bot):
   bot.add_cog(Votecount(bot))

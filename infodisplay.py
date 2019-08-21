@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class Infodisplay():
+class Infodisplay(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -17,41 +17,42 @@ class Infodisplay():
     async def info(self, ctx):
         if ctx.message.author.id == 183457916114698241:
             content = [
-["""We are a community server to hang out, chat, and make friends. Don't be shy! We love meeting and talking to new people. Please take a moment to read the rules and general information about the server below.
+["""Lonely Nerds is a welcoming and friendly community server to hang out, chat, and make friends. Please take a moment to read the rules and general information about the server below. 
 
-If you have any questions, feel free to ask in """ + self.bot.get_channel(473964680004763659).mention + """!
+Permanent invite link: `http://discord.gg/Hfjq8nU`""", "Welcome to Lonely Nerds!", "https://cdn.discordapp.com/attachments/372188609425702915/498973052445523983/lonelynerds.png", 0xFFC961],
 
-Permanent invite link: `http://discord.gg/VnAjMgy`""", "Welcome to Lonely Nerds!", "https://cdn.discordapp.com/attachments/372188609425702915/498973052445523983/lonelynerds.png", 0xFFC961],
+["""`1`: Keep your posts in the appropriate channels.
 
-["""`1`: Follow the Discord TOS.
+`2`: Do not abuse mentionable roles.
 
-`2`: Keep your posts in the appropriate channels.
+`3`: Refrain from text and/or emoji spam.
 
-`3`: Do not DM any users with the `DMs closed` role.
+`4`: Server advertisements are forbidden in chat, DMs, and nicknames.
 
-`4`: Advertisements are forbidden in chat, DMs, and nicknames.
+`5`: No racism, hatred, personal attacks, harassment, or general hostility towards others.
 
-`5`: We encourage free speech and open discussion, but racism, hatred, personal attacks, harassment, or general hostility towards others will *not* be tolerated.
+`6`: Glitched blank nicknames, blank transparent profile pictures, and default profile pictures are forbidden.
 
-`6`: Refrain from posting irrelevant links and/or images in """ + self.bot.get_channel(455399951258746902).mention + """.""", "Server Rules", "https://cdn.discordapp.com/attachments/372188609425702915/498962400171786250/clipboard.png", 0xFFFFFF],
+`7`: Do not DM any users with the `DMs Closed` role.
 
-["""This server uses MEE6's leveling system. Every time you send a message, you earn an amount of experience between 15 and 25. To prevent spam, you can only gain experience once per minute.
+`8`: As a Discord user, you are responsible for knowledge of and abiding by the Discord ToS and community guidelines.
+ToS: https://discordapp.com/terms
+Community Guildelines: https://discordapp.com/guidelines
+Treat the content of each document as an extension of this server's rule listing.""", "Rules", "https://cdn.discordapp.com/attachments/372188609425702915/498962400171786250/clipboard.png", 0xFFFFFF],
+
+["""Lonely Nerds uses MEE6 for level progression. You earn between 15 and 25 experience with each message. To prevent spam, you only gain experience once per minute.
 
 Roles are rewarded based on level.
 ``` Level   Role
 -----------------------------
-  3:     Newbie
-  6:     Acquaintance
-  9:     Familiar
- 12:     Buddy
- 15:     Casual Friend
- 18:     Friend
- 21:     Good Friend
- 24:     Close Friend
- 27:     Best Friend
- 30:     Best Friend Forever
- 35:     Family
- 40:     Loyal Family```
+  2:     Acquaintance
+ 10:     Buddy
+ 20:     Friend
+ 30:     Best Friend
+ 40:     Family
+ 50:     Loyal Family```
+
+The self-assignable role channels, """ + self.bot.get_channel(581270202986266644).mention + """ and """ + self.bot.get_channel(580183333510709258).mention + """, are unlocked upon reaching level 2.
 
 To view ranking information, use the """ + self.bot.get_channel(455400008246624257).mention + """ channel to issue any of the following commands.
 
@@ -64,23 +65,7 @@ View the server's leaderboard.
 `e!top`
 View an embedded version of the server's leaderboard.""", "Leveling", "https://cdn.discordapp.com/attachments/372188609425702915/498966600288960538/mee6.png", 0x60D1F6],
 
-["""We have self-assignable roles you can obtain in """ + self.bot.get_channel(487029031888486424).mention + """
-
-We also have award based roles that can be obtained.
-
-`Verified Nerd`
-Awarded to those who post a selfie in """ + self.bot.get_channel(465697566571364352).mention + """.
-
-`Fully Verified Nerd`
-Awarded to those who post a selfie in """ + self.bot.get_channel(465697566571364352).mention + """ holding a piece of paper with your Discord tag written on it.
-
-`Supporter`
-Awarded to those who make a suggestion in """ + self.bot.get_channel(473964680004763659).mention + """ that gets implemented.
-
-`Champion`
-Awarded to those who win server events or contests.""", "Roles", "https://cdn.discordapp.com/attachments/372188609425702915/498980224197722123/shield.png", 0x55ACEE],
-
-["""To use the color role system, use the """ + self.bot.get_channel(455400008246624257).mention + """ channel to issue any of the following commands.
+["""We have a wide variety of color roles to choose from! Head over to """ + self.bot.get_channel(455400008246624257).mention + """ and issue any of the following commands.
 
 `e!colors`
 View the availible colors.
@@ -91,15 +76,6 @@ Apply a color role.
 `e!removecolor`
 Remove your current color role.""", "Color Roles", "https://cdn.discordapp.com/attachments/372188609425702915/498958897499865088/color-wheel.png", 0xFF0000],
 
-["""Check out our contests!
-
-We host weekly photography and drawing contests.
-Head over to """ + self.bot.get_channel(487029031888486424).mention + """ and grab the `Artist` role if you are interested in participating in art contests, and grab the `Photographer` role if you are interested in participating in photography contests.
-
-Check """ + self.bot.get_channel(508819194792378369).mention + """ for the latest art contest and """ + self.bot.get_channel(487634576253124609).mention + """ for the latest photography contest.
-
-We also host other unique contests you should look out for!""", "Contests", "https://cdn.discordapp.com/attachments/372188609425702915/510934259121520661/1f3c6.png", 0xffcc4d],
-
 ["""Is there anything you would like to get off your chest with the comfort of anonymity?
 
 Feel free to submit a confession to the Google form provided below. Your submission is anonymous and the confession will be displayed in """ + self.bot.get_channel(508109297385734144).mention + """.
@@ -108,7 +84,7 @@ Confessions must be **safe for work** and do ***not*** submit insulting remarks 
 
 https://goo.gl/forms/CmugvdeHEU9rpuE52""", "Confessions", "https://cdn.discordapp.com/attachments/372188609425702915/511346995600818187/speaking-ICON.png", 0x000000],
 
-["""Now that you are all caught up on what you need to know, stop by """ + self.bot.get_channel(455399951258746902).mention + """ to say hi!""", "Thanks for reading!", "https://cdn.discordapp.com/attachments/372188609425702915/498988413966352384/wave.png", 0xFFDC5D] ]
+["""Now that you are caught up on what you need to know, stop by """ + self.bot.get_channel(455399951258746902).mention + """ to say hi!""", "Thanks for reading!", "https://cdn.discordapp.com/attachments/372188609425702915/498988413966352384/wave.png", 0xFFDC5D] ]
             await self.postembed(ctx, content)
             await ctx.message.delete()
 
@@ -118,10 +94,10 @@ https://goo.gl/forms/CmugvdeHEU9rpuE52""", "Confessions", "https://cdn.discordap
             content = [ ["""**Theme: ** """ + theme + """
  **Deadline: **""" + deadline + """
 
-__**Description**__\n""" +
+**Description:**\n""" +
 description, "Photo Contest", "https://cdn.discordapp.com/attachments/372188609425702915/500029451250302976/1f4f7.png", 0x3C88C2],
 
-["""- You must have the `Photographer` role to participate. Visit """ + self.bot.get_channel(487029031888486424).mention + """ to apply the role.
+["""- You must have the `Photographer` role to participate. Visit """ + self.bot.get_channel(581270202986266644).mention + """ to apply the role.
 - Subit one photo to """ + self.bot.get_channel(487634576253124609).mention + """ by the specified deadline.
 - Submissions must be original content and follow the specified theme.
 
@@ -132,7 +108,6 @@ The winner will receive the `Photo Contest Winner` role, bragging rights, and ha
 
 Good luck!""", "Rules", "https://cdn.discordapp.com/attachments/372188609425702915/498962400171786250/clipboard.png", 0xFFFFFF] ]
             await self.postembed(ctx, content)
-            await ctx.message.delete()
             await ctx.message.delete()
 
     @commands.command()

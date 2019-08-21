@@ -5,7 +5,7 @@ import json
 from discord.ext import commands
 #import os
 #os.chdir("C:\\Users\\hxcfr\\Desktop\\discord bot")
-class Teams():
+class Teams(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

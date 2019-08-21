@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class Moderation():
+class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.muted = 523256295260946433

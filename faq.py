@@ -2,7 +2,26 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class FAQ():
+class FAQ(commands.Cog):
+    rules = ["`1`: Keep your posts in the appropriate channels.",
+
+"`2`: Do not abuse mentionable roles.",
+
+"`3`: Refrain from text and/or emoji spam.",
+
+"`4`: Server advertisements are forbidden in chat, DMs, and nicknames.",
+
+"`5`: No racism, hatred, personal attacks, harassment, or general hostility towards others.",
+
+"`6`: Glitched blank nicknames, blank transparent profile pictures, and default profile pictures are forbidden.",
+
+"`7`: Do not DM any users with the `DMs Closed` role.",
+
+"""`8`: As a Discord user, you are responsible for knowledge of and abiding by the Discord ToS and community guidelines.
+ToS: https://discordapp.com/terms
+Community Guildelines: https://discordapp.com/guidelines
+Treat the content of each document as an extension of this server's rule listing."""]
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -12,19 +31,40 @@ class FAQ():
         embed.set_author(name=question)
         embed.colour = ctx.message.author.colour if hasattr(ctx.message.author, "colour") else discord.Colour.default()
         await ctx.send(embed=embed)
+        
     @commands.command()
     async def verification(self, ctx):
-        helpmsg = "The `Verified Nerd Role` is rewarded to users who post a selfie in #selfies.\nThe `Fully Verified Nerd` role is rewarded to users who post a selfie in #selfies holding a piece of paper with their Discord tag written on it.\nThese are aesthetic roles and have no real value, nor is there any requirement for users to verify themselves."
+        helpmsg = """`Verified Nerd`
+For users who post a selfie in """ + self.bot.get_channel(465697566571364352).mention + """
+
+`Fully Verified Nerd`
+For users who post a selfie in """ + self.bot.get_channel(465697566571364352).mention + """ holding a piece of paper with their Discord tag written on it.
+
+These are aesthetic roles and hold no real value. We do not require users to verify themselves to participate on the server."""
         await self.faq(ctx, helpmsg, "Verification")
         await ctx.message.delete()
     @commands.command()
-    async def generations(self, ctx):
-        helpmsg = "Generation roles are seniority roles based on join date.\n07/28 - 07/31: `Gen 0`\n08/01 - 08/31:\t`Gen 1`\n09/01 - 09/30:\t`Gen 2`\n. . . etc\nThe generation number increases on the 1st of every month."
-        await self.faq(ctx, helpmsg, "Generations")
+    async def roles(self, ctx):
+        helpmsg = """Our self-assignable role channels, """ + self.bot.get_channel(581270202986266644).mention + """ and """ + self.bot.get_channel(580183333510709258).mention + """, unlock at level 2 which involves around 10 - 15 minutes of chatting to reach."""
+        await self.faq(ctx, helpmsg, "Roles")
+        await ctx.message.delete()
+    @commands.command()
+    async def colorroles(self, ctx):
+        helpmsg = """Use """ + self.bot.get_channel(455400008246624257).mention + """ to issue any of the following commands.
+
+`e!colors`
+View the availible colors.
+
+`e!addcolor color`
+Apply a color role.
+
+`e!removecolor`
+Remove your current color role."""
+        await self.faq(ctx, helpmsg, "Color Roles")
         await ctx.message.delete()
     @commands.command()
     async def invite(self, ctx):
-        await ctx.send("http://discord.gg/VnAjMgy")
+        await ctx.send("http://discord.gg/Hfjq8nU")
         await ctx.message.delete()
 
     @commands.command()

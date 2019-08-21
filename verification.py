@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class Verification():
+class Verification(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.verified_ids = [473649456043261953, 473649831328481282]
